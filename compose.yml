@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    tty: true
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+
+  redis:
+    image: "redis:7.2.4-alpine"
+    ports:
+      - 6379:6379
+    volumes:
+      - /data/redis:/data
