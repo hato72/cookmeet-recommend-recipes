@@ -1,22 +1,25 @@
-import redis
+import redis # type: ignore
 from abc import ABC, abstractmethod
-from schemas.category import Category
+from src.schemas.category import Category
 from src.services.category import ICategoryCRUD
+import json
 
-r = redis.Redis(host='localhost', port=6379, decode_responses=True)
 
 class CategoryCRUD(ICategoryCRUD):
+    r = redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
+        
     def cache_categories(self, categories: list[Category]):
         for category in categories:
-            r.hset('categories', str(category.id), category.model_dump_json())
+            self.r.hset('categories', str(category.id), category.model_dump_json())
             
     def get_all_categories(self) -> list[Category]:
         categories: list[Category] = []
         
-        redis_categories = r.hgetall('categories')
+        redis_categories = self.r.hgetall('categories')
         
         for category_raw in redis_categories.values():
-            category = Category.model_validate(category_raw)
+            category_dict = json.loads(category_raw)
+            category = Category.model_validate(category_dict)
             categories.append(category)
             
         return categories
