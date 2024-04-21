@@ -21,6 +21,7 @@ class RecipeFetcher(IRecipeFetcher):
             recipe['url'] = recipe.pop('recipeUrl')
             recipe['description'] = recipe.pop('recipeDescription')
             recipe['image_url'] = recipe.pop('foodImageUrl')
+            recipe['category_id'] = category_id
             
         recipes = [Recipe(**recipe) for recipe in recipes]
         

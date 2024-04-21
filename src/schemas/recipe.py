@@ -7,6 +7,13 @@ class Recipe(BaseModel):
     url: str = Field(..., title='URL', pattern="https?://[\\w!?/+\\-_~;.,*&@#$%()'\\[\\]]+") # URLの正規表現
     description: str
     image_url: str = Field(..., title='Image URL', pattern="https?://[\\w!?/+\\-_~;.,*&@#$%()'\\[\\]]+")
+    category_id: str
+    
+    @validator('category_id')
+    def category_id_must_have_three_parts(cls, v):
+        parts = v.split('-')
+        if len(parts) != 3:
+            raise ValueError('カテゴリーのIDは大-中-小の3つの部分で指定してください')
     
 # レシピ取得用の抽象クラス
 class IRecipeFetcher(ABC):
