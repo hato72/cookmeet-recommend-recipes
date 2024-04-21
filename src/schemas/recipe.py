@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 from abc import ABC, abstractmethod
 
 class Recipe(BaseModel):
@@ -9,7 +9,8 @@ class Recipe(BaseModel):
     image_url: str = Field(..., title='Image URL', pattern="https?://[\\w!?/+\\-_~;.,*&@#$%()'\\[\\]]+")
     category_id: str
     
-    @validator('category_id')
+    @field_validator('category_id')
+    @classmethod
     def category_id_must_have_three_parts(cls, v):
         parts = v.split('-')
         if len(parts) != 3:
