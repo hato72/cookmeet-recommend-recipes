@@ -1,3 +1,4 @@
 gcloud
 recommend-recipes
 src/**/__pycache__/*
+.env*
