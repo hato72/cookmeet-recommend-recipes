@@ -15,9 +15,6 @@ class CategoryCRUD(ICategoryCRUD):
         
         redis_categories = r.hgetall('categories')
         
-        if not redis_categories:
-            pass
-        
         for category_raw in redis_categories.values():
             category = Category.model_validate(category_raw)
             categories.append(category)

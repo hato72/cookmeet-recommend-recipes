@@ -14,38 +14,33 @@ class ICategoryCRUD(ABC):
     def get_all_categories(self) -> list[Category]:
         pass
     
+# カテゴリー情報を取得するための抽象クラス
+class ICategoryFetcher(ABC):
+    @abstractmethod
+    def fetch(self) -> list[Category]:
+        pass
 
 @dataclass
 class CategoryService():
     category_crud: ICategoryCRUD
+    category_fetcher: ICategoryFetcher
     
-    def __init__(self, category_crud: ICategoryCRUD):
+    def __init__(self, category_crud: ICategoryCRUD, category_fetcher: ICategoryFetcher):
         self.category_crud = category_crud
+        self.category_fetcher = category_fetcher
         
-    def fetch_categories(self) -> list[Category]:
-        try:
-            req = requests.get('https://app.rakuten.co.jp/services/api/Recipe/CategoryList/20170426?',
-                            params={
-                                'applicationId': config.RAKUTEN_APPLICATION_ID,
-                                'format': 'json',
-                                'categoryType': 'small',
-                                'elements': 'categoryId,categoryName,categoryUrl',
-                            })
-    
-            data = req.json()
-            categories = data['result']['small']
-    
-            # Categoryのスキーマに合うようにリネーム
-            for category in categories:
-                category['id'] = category.pop('categoryId')
-                category['name'] = category.pop('categoryName')
-                category['url'] = category.pop('categoryUrl')
-                
-            # categoriesをリストに格納
-            categories = [Category(**category) for category in categories]
-   
+    def cache_categories(self):
+        categories = self.category_fetcher.fetch()
+        self.category_crud.cache_categories(categories)
+        
+    def get_all_categories(self) -> list[Category]:
+        categories = self.category_crud.get_all_categories()
+        
+        if not categories:
+            # もしキャッシュにデータがなければもう一度取得してそれをキャッシュする
+            categories = self.category_fetcher.fetch()
+            self.category_crud.cache_categories(categories)
             return categories
-    
-        # 一旦普通にエラーを投げる
-        except Exception as e:
-            raise e
+        
+        return categories
+  
