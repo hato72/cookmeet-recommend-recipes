@@ -1,12 +1,11 @@
 from src.schemas.recipe import Recipe, IRecipeFetcher
-from pydantic import BaseModel
 from typing import Final
 import time
 
-class RecipeService(BaseModel):
+class RecipeService():
     
     _recipe_fetcher: IRecipeFetcher
-    SLEEP_TIME: Final = 1000
+    SLEEP_TIME: Final = 1
     
     def __init__(self, recipe_fetcher: IRecipeFetcher):
         self._recipe_fetcher = recipe_fetcher
