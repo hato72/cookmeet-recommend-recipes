@@ -10,16 +10,16 @@ class CategoryFetcher(ICategoryFetcher):
                             params={
                                 'applicationId': config.RAKUTEN_APPLICATION_ID,
                                 'format': 'json',
-                                'categoryType': 'small',
-                                'elements': 'categoryId,categoryName,categoryUrl',
+                                'categoryType': 'medium',
+                                'elements': 'categoryId,categoryName,categoryUrl,parentCategoryId',
                             })
     
             data = req.json()
-            categories = data['result']['small']
+            categories = data['result']['medium']
     
             # Categoryのスキーマに合うようにリネーム
             for category in categories:
-                category['id'] = category.pop('categoryId')
+                category['id'] = str(category.pop('parentCategoryId')) + '-' + str(category.pop('categoryId'))
                 category['name'] = category.pop('categoryName')
                 category['url'] = category.pop('categoryUrl')
                 
