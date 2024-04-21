@@ -3,7 +3,7 @@ from src.schemas.category import Category
 import requests
 import src.config as config
 
-class CategoryFettcher(ICategoryFetcher):
+class CategoryFetcher(ICategoryFetcher):
     def fetch(self) -> list[Category]:
         try:
             req = requests.get('https://app.rakuten.co.jp/services/api/Recipe/CategoryList/20170426?',
