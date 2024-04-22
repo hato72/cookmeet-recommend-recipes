@@ -1,9 +1,10 @@
 from src.schemas.recipe import Recipe, IRecipeFetcher
 import requests
 import src.config as config
+from src.schemas.category import CategoryId
 
 class RecipeFetcher(IRecipeFetcher):
-    def fetch_recipe(self, category_id: str) -> list[Recipe]:
+    def fetch_recipe(self, category_id: CategoryId) -> list[Recipe]:
         res = requests.get('https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426', params={
             'applicationId': config.RAKUTEN_APPLICATION_ID,
             'format': 'json',
