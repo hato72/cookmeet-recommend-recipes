@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field, field_validator
 from abc import ABC, abstractmethod
+from src.schemas.category import CategoryId
 
 class Recipe(BaseModel):
     id: int
@@ -7,12 +8,12 @@ class Recipe(BaseModel):
     url: str = Field(..., title='URL', pattern="https?://[\\w!?/+\\-_~;.,*&@#$%()'\\[\\]]+") # URLの正規表現
     description: str
     image_url: str = Field(..., title='Image URL', pattern="https?://[\\w!?/+\\-_~;.,*&@#$%()'\\[\\]]+")
-    category_id: str
+    category_id: CategoryId
     
 # レシピ取得用の抽象クラス
 class IRecipeFetcher(ABC):
     @abstractmethod
-    def fetch_recipe(self, category_id: str) -> list[Recipe]:
+    def fetch_recipe(self, category_id: CategoryId) -> list[Recipe]:
         """
         レシピを取得する
         
