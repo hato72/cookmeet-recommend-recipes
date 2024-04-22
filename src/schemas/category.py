@@ -16,3 +16,9 @@ class CategoryForRecommend(BaseModel):
     def __init__(self, category: Category):
         self.id = category.id
         self.name = category.name
+        
+        
+# レコメンドした後の返り値はこの形式で返す
+class CategoryIdWithRank(BaseModel):
+    rank: int
+    cateogry_id: CategoryId

@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from abc import ABC, abstractmethod
-from src.schemas.category import CategoryForRecommend
+from src.schemas.category import CategoryForRecommend, CategoryIdWithRank
 from src.schemas.recipe import RecipeForRecommend
 
 class RecommendRequestBody(BaseModel):
@@ -10,7 +10,12 @@ class RecommendRequestBody(BaseModel):
 class Recommend(ABC):
     
     @abstractmethod
-    def recommend_categories(self, psychorogical_test_results: list[str], categories: list[CategoryForRecommend], num_categories_to_recommend: int = 5) -> list[CategoryForRecommend]:
+    def recommend_categories(self, psychorogical_test_results: list[str], categories: list[CategoryForRecommend], num_categories_to_recommend: int = 5) -> list[CategoryIdWithRank]:
+        """
+        おすすめのカテゴリを返す。
+        
+        返り値は{"順位": "カテゴリID"}の形式で返す
+        """
         pass
     
     @abstractmethod
