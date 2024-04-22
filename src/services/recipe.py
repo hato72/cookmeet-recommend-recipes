@@ -12,13 +12,6 @@ class RecipeService():
         self._recipe_fetcher = recipe_fetcher
     
     def fetch_recipes_by_category_ids(self, category_ids: list[CategoryId]) -> dict[str, list[Recipe]] | dict[str, str]:
-        # category_idのフォーマットをチェック
-        for category_id in category_ids:
-            parts = category_id.split('-')
-            if len(parts) != 3:
-                return {
-                    'error': 'カテゴリーのIDは大-中-小の3つの部分で指定してください'
-                }
                 
         recipes: dict[str, list[Recipe]] = {}
         for category_id in category_ids:
