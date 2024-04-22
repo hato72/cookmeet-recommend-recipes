@@ -1,7 +1,7 @@
 from src.schemas.recipe import Recipe, IRecipeFetcher, RecipeForRecommend
 from typing import Final
 import time
-from src.schemas.category import CategoryId
+from src.schemas.category import CategoryId, CategoryIdWithRank
 
 class RecipeService():
     
@@ -11,13 +11,12 @@ class RecipeService():
     def __init__(self, recipe_fetcher: IRecipeFetcher):
         self._recipe_fetcher = recipe_fetcher
     
-    def fetch_recipes_by_category_ids(self, category_ids: list[CategoryId]) -> dict[str, list[Recipe]] | dict[str, str]:
-                
-        recipes: dict[str, list[Recipe]] = {}
-        for category_id in category_ids:
+    def fetch_recipes_by_ranked_category_ids(self, ranked_category_ids: list[CategoryIdWithRank]) -> dict[int, list[Recipe]]:
+        recipes: dict[int, list[Recipe]] = {}
+        for ranked_category_id in ranked_category_ids:
             # 一定時間スリープしてからリクエストを送る
             time.sleep(self.SLEEP_TIME)
-            recipes[category_id] = self._recipe_fetcher.fetch_recipe(category_id)
+            recipes[ranked_category_id.rank] = self._recipe_fetcher.fetch_recipe(ranked_category_id.cateogry_id)
             
         return recipes
     
