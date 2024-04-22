@@ -9,7 +9,7 @@ class Recipe(BaseModel):
     url: str = Field(..., title='URL', pattern="https?://[\\w!?/+\\-_~;.,*&@#$%()'\\[\\]]+") # URLの正規表現
     description: str
     image_url: str = Field(..., title='Image URL', pattern="https?://[\\w!?/+\\-_~;.,*&@#$%()'\\[\\]]+")
-    category_id: CategoryId
+    category_id: CategoryId | None = None
     
 # レコメンドの際に使うレシピのスキーマ
 class RecipeForRecommend(BaseModel):

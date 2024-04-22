@@ -11,12 +11,16 @@ class RecipeService():
     def __init__(self, recipe_fetcher: IRecipeFetcher):
         self._recipe_fetcher = recipe_fetcher
     
-    def fetch_recipes_by_category_ids(self, category_ids: list[CategoryId]) -> dict[str, list[Recipe]]:
-        recipes: dict[str, list[Recipe]] = {}
+    def fetch_recipes_by_category_ids(self, category_ids: list[CategoryId]) -> list[Recipe]:
+        recipes: list[Recipe] = []
         for category_id in category_ids:
             # 一定時間スリープしてからリクエストを送る
             time.sleep(self.SLEEP_TIME)
-            recipes[category_id] = self._recipe_fetcher.fetch_recipe(category_id)
+            fetched_recipes = self._recipe_fetcher.fetch_recipe(category_id)
+            for fetched_recipe in fetched_recipes:
+                fetched_recipe.category_id = category_id
+            
+            recipes.extend(fetched_recipes)
             
         return recipes
     

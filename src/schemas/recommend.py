@@ -19,7 +19,7 @@ class IRecommend(ABC):
         pass
     
     @abstractmethod
-    def recommend_recipes(self, contditions: list[str], category_2_recipes: dict[str, list[RecipeForRecommend]], categories_rank: list[CategoryIdWithRank], num_recipes_to_recommend: int = 3) -> list[RecipeIdWithRank]:
+    def recommend_recipes(self, contditions: list[str], recipes: list[RecipeForRecommend], categories_rank: list[CategoryIdWithRank], num_recipes_to_recommend: int = 3) -> list[RecipeIdWithRank]:
         """
         おすすめのレシピを返す
         
