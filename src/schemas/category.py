@@ -21,4 +21,4 @@ class CategoryForRecommend(BaseModel):
 # レコメンドした後の返り値はこの形式で返す
 class CategoryIdWithRank(BaseModel):
     rank: int
-    cateogry_id: CategoryId
+    category_id: CategoryId
