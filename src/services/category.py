@@ -2,7 +2,7 @@ from src.schemas.category import Category
 import src.config as config
 import requests
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from pydantic import BaseModel
 
 # データベースとやり取りするための抽象クラス
 class ICategoryCRUD(ABC):
@@ -20,8 +20,7 @@ class ICategoryFetcher(ABC):
     def fetch(self) -> list[Category]:
         pass
 
-@dataclass
-class CategoryService():
+class CategoryService(BaseModel):
     category_crud: ICategoryCRUD
     category_fetcher: ICategoryFetcher
     
