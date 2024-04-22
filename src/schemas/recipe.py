@@ -17,7 +17,7 @@ class IRecipeFetcher(ABC):
         """
         レシピを取得する
         
-        category_idは大-中-小の順で指定する
-        例: 10-200-2001
+        category_idは大-中の順で指定する
+        例: 10-200
         """
         pass
