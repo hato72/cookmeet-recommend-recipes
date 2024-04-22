@@ -10,7 +10,7 @@ class RecommendRequestBody(BaseModel):
 class IRecommend(ABC):
     
     @abstractmethod
-    def recommend_categories(self, psychorogical_test_results: list[str], categories: list[CategoryForRecommend], num_categories_to_recommend: int = 5) -> list[CategoryIdWithRank]:
+    def recommend_categories(self, psychorogical_test_results: list[str], categories: list[CategoryForRecommend], num_categories_to_recommend: int) -> list[CategoryIdWithRank]:
         """
         おすすめのカテゴリを返す。
         
