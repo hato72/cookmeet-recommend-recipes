@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from abc import ABC, abstractmethod
-from src.schemas.category import Category
+from src.schemas.category import CategoryForRecommend
 from src.schemas.recipe import Recipe
 
 class RecommendRequestBody(BaseModel):
@@ -10,7 +10,7 @@ class RecommendRequestBody(BaseModel):
 class Recommend(ABC):
     
     @abstractmethod
-    def recommend_categories(self, psychorogical_test_results: list[str], num_categories_to_recommend: int = 5) -> list[Category]:
+    def recommend_categories(self, psychorogical_test_results: list[str], categories: list[CategoryForRecommend], num_categories_to_recommend: int = 5) -> list[CategoryForRecommend]:
         pass
     
     @abstractmethod
