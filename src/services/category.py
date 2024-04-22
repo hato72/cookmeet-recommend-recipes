@@ -1,8 +1,8 @@
-from src.schemas.category import Category
+from src.schemas.category import Category, CategoryForRecommend
 import src.config as config
 import requests
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from pydantic import BaseModel
 
 # データベースとやり取りするための抽象クラス
 class ICategoryCRUD(ABC):
@@ -20,8 +20,7 @@ class ICategoryFetcher(ABC):
     def fetch(self) -> list[Category]:
         pass
 
-@dataclass
-class CategoryService():
+class CategoryService(BaseModel):
     category_crud: ICategoryCRUD
     category_fetcher: ICategoryFetcher
     
@@ -43,4 +42,8 @@ class CategoryService():
             return categories
         
         return categories
+            
+    @classmethod
+    def convert_categories_to_recommend(cls, categories: list[Category]) -> list[CategoryForRecommend]:
+        return [CategoryForRecommend(category) for category in categories]
   
