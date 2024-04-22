@@ -1,4 +1,4 @@
-from src.schemas.category import Category
+from src.schemas.category import Category, CategoryForRecommend
 import src.config as config
 import requests
 from abc import ABC, abstractmethod
@@ -42,4 +42,8 @@ class CategoryService(BaseModel):
             return categories
         
         return categories
+            
+    @classmethod
+    def convert_categories_to_recommend(cls, categories: list[Category]) -> list[CategoryForRecommend]:
+        return [CategoryForRecommend(category) for category in categories]
   

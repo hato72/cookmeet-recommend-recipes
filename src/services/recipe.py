@@ -1,4 +1,4 @@
-from src.schemas.recipe import Recipe, IRecipeFetcher
+from src.schemas.recipe import Recipe, IRecipeFetcher, RecipeForRecommend
 from typing import Final
 import time
 from src.schemas.category import CategoryId
@@ -20,3 +20,7 @@ class RecipeService():
             recipes[category_id] = self._recipe_fetcher.fetch_recipe(category_id)
             
         return recipes
+    
+    @classmethod
+    def convert_recipes_to_recommend(cls, recipes: list[Recipe]) -> list[RecipeForRecommend]:
+        return [RecipeForRecommend(recipe) for recipe in recipes]
