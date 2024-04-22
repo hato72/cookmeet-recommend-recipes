@@ -1,4 +1,5 @@
-from pydantic import BaseModel, Field, field_validator
+from typing_extensions import Unpack
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from abc import ABC, abstractmethod
 from src.schemas.category import CategoryId
 
@@ -9,6 +10,17 @@ class Recipe(BaseModel):
     description: str
     image_url: str = Field(..., title='Image URL', pattern="https?://[\\w!?/+\\-_~;.,*&@#$%()'\\[\\]]+")
     category_id: CategoryId
+    
+# レコメンドの際に使うレシピのスキーマ
+class RecipeForRecommend(BaseModel):
+    id: int
+    title: str
+    description: str
+    
+    def __init__(self, recipe: Recipe):
+        self.id = recipe.id
+        self.title = recipe.title
+        self.description = recipe.description
     
 # レシピ取得用の抽象クラス
 class IRecipeFetcher(ABC):
