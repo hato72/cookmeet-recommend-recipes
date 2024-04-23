@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import NewType
+from abc import ABC, abstractmethod
 
 CategoryId = NewType('CategoryId', str)
 
@@ -22,3 +23,19 @@ class CategoryForRecommend(BaseModel):
 class CategoryIdWithRank(BaseModel):
     rank: int
     category_id: CategoryId
+    
+# データベースとやり取りするための抽象クラス
+class ICategoryCRUD(ABC, BaseModel):
+    @abstractmethod
+    def cache_categories(self, categories: list[Category]):
+        pass
+    
+    @abstractmethod
+    def get_all_categories(self) -> list[Category]:
+        pass
+    
+# カテゴリー情報を取得するための抽象クラス
+class ICategoryFetcher(ABC, BaseModel):
+    @abstractmethod
+    def fetch(self) -> list[Category]:
+        pass
