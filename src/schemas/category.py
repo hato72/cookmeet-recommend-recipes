@@ -15,6 +15,7 @@ class CategoryForRecommend(BaseModel):
     name: str
     
     def __init__(self, category: Category):
+        super().__init__(id=category.id, name=category.name)
         self.id = category.id
         self.name = category.name
         
