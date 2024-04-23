@@ -9,6 +9,7 @@ class CategoryService(BaseModel):
     category_fetcher: ICategoryFetcher
     
     def __init__(self, category_crud: ICategoryCRUD, category_fetcher: ICategoryFetcher):
+        super().__init__(category_crud=category_crud, category_fetcher=category_fetcher)
         self.category_crud = category_crud
         self.category_fetcher = category_fetcher
         
