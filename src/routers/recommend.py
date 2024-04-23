@@ -12,7 +12,7 @@ from src.fetchers.recipe import RecipeFetcher
 router = APIRouter()
 
 @router.post('/recipes/recommend')
-async def recommend_recipes(recomend_request_body: RecommendRequestBody):
+async def recommend_recipes(recommend_request_body: RecommendRequestBody):
     # 心理テストからおすすめのカテゴリを取得
     category_service = CategoryService(CategoryCRUD(), CategoryFetcher())
     all_categories = category_service.get_all_categories()
@@ -20,7 +20,7 @@ async def recommend_recipes(recomend_request_body: RecommendRequestBody):
     # AIに読み取らせるために余計なフィールドを省く（URLなど）
     all_categories_to_recommend = category_service.convert_categories_to_recommend(all_categories)
     # 順位付けされたカテゴリのIDを取得
-    ranked_categories_id = recommened_service.recommend_categories(psychorogical_test_results=recomend_request_body.texts, categories=all_categories_to_recommend)
+    ranked_categories_id = recommened_service.recommend_categories(psychorogical_test_results=recommend_request_body.texts, categories=all_categories_to_recommend)
     # 順位付けされたカテゴリのIDからカテゴリのIDを抽出
     recommended_categories_id = list(map(lambda x: x.category_id, ranked_categories_id))
     
@@ -31,7 +31,7 @@ async def recommend_recipes(recomend_request_body: RecommendRequestBody):
     # AIに読み取らせるために余計なフィールドを省く（URLなど）
     recipes_to_recommend: list[RecipeForRecommend] = recipe_service.convert_recipes_to_recommend(recipes)
     # おすすめのレシピのIDをランキング付きで取得
-    ranked_recipe_ids = recommened_service.recommend_recipes(conditions=recomend_request_body.conditions, recipes=recipes_to_recommend, categories_rank=ranked_categories_id)
+    ranked_recipe_ids = recommened_service.recommend_recipes(conditions=recommend_request_body.conditions, recipes=recipes_to_recommend, categories_rank=ranked_categories_id)
     # IDの情報を元のレシピに変換
     ranked_recipes = recipe_service.convert_recipe_ids_to_ranked_recipes(ranked_recipe_ids, recipes)
     return {"recipes": ranked_recipes}
