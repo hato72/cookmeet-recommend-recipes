@@ -18,6 +18,7 @@ class RecipeForRecommend(BaseModel):
     description: str
     
     def __init__(self, recipe: Recipe):
+        super().__init__(id=recipe.id, title=recipe.title, description=recipe.description)
         self.id = recipe.id
         self.title = recipe.title
         self.description = recipe.description
