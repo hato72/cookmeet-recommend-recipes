@@ -1,18 +1,28 @@
 import redis # type: ignore
 from abc import ABC, abstractmethod
+import redis.client
 from src.schemas.category import Category
 from src.services.category import ICategoryCRUD
 import json
-
+from typing import ClassVar
 
 class CategoryCRUD(ICategoryCRUD):
-    r = redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
+    
+    r: ClassVar[redis.Redis] = redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
+    model_config = {
+        'arbitrary_types_allowed': True
+    }
         
     def cache_categories(self, categories: list[Category]):
+        if not self.r:
+            raise Exception('Redisの接続に失敗しました')
         for category in categories:
             self.r.hset('categories', str(category.id), category.model_dump_json())
             
     def get_all_categories(self) -> list[Category]:
+        if not self.r:
+            raise Exception('Redisの接続に失敗しました')
+        
         categories: list[Category] = []
         
         redis_categories = self.r.hgetall('categories')
