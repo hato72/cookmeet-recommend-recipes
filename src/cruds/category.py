@@ -17,6 +17,9 @@ class CategoryCRUD(ICategoryCRUD):
     def cache_categories(self, categories: list[Category]):
         if not self.r:
             raise Exception('Redisの接続に失敗しました')
+        
+        self.r.delete('categories') # 元のデータをすべて削除
+        
         for category in categories:
             self.r.hset('categories', str(category.id), category.model_dump_json())
             
