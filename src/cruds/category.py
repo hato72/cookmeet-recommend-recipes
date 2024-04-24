@@ -5,10 +5,11 @@ from src.schemas.category import Category
 from src.services.category import ICategoryCRUD
 import json
 from typing import ClassVar
+import src.config as config
 
 class CategoryCRUD(ICategoryCRUD):
     
-    r: ClassVar[redis.Redis] = redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
+    r: ClassVar[redis.Redis] = redis.Redis(host=config.REDISHOST, port=config.REDISPORT, db=0, decode_responses=True)
     model_config = {
         'arbitrary_types_allowed': True
     }
