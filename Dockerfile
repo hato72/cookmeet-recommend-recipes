@@ -9,6 +9,5 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-# 本番環境では, --hostとして--reloadを削除する
-# CMD ["uvicorn", "app.main:app", "--reload"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0"]
 
