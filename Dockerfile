@@ -9,5 +9,5 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8080"]
 
