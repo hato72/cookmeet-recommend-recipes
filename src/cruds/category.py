@@ -5,10 +5,11 @@ from src.schemas.category import Category
 from src.services.category import ICategoryCRUD
 import json
 from typing import ClassVar
+import src.config as config
 
 class CategoryCRUD(ICategoryCRUD):
     
-    r: ClassVar[redis.Redis] = redis.Redis(host='redis', port=6379, db=0, decode_responses=True)
+    r: ClassVar[redis.Redis] = redis.Redis(host=config.REDISHOST, port=config.REDISPORT, db=0, decode_responses=True)
     model_config = {
         'arbitrary_types_allowed': True
     }
@@ -16,6 +17,9 @@ class CategoryCRUD(ICategoryCRUD):
     def cache_categories(self, categories: list[Category]):
         if not self.r:
             raise Exception('Redisの接続に失敗しました')
+        
+        self.r.delete('categories') # 元のデータをすべて削除
+        
         for category in categories:
             self.r.hset('categories', str(category.id), category.model_dump_json())
             
