@@ -10,6 +10,7 @@ class Recipe(BaseModel):
     description: str
     image_url: str = Field(..., title='Image URL', pattern="https?://[\\w!?/+\\-_~;.,*&@#$%()'\\[\\]]+")
     category_id: CategoryId | None = None
+    recipe_materials: list[str]
     
 # レコメンドの際に使うレシピのスキーマ
 class RecipeForRecommend(BaseModel):
