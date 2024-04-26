@@ -8,7 +8,7 @@ class RecipeFetcher(IRecipeFetcher):
         res = requests.get('https://app.rakuten.co.jp/services/api/Recipe/CategoryRanking/20170426', params={
             'applicationId': config.RAKUTEN_APPLICATION_ID,
             'format': 'json',
-            'elemnts': 'recipeId,foodImageUrl,recipeDescription,recipeTitle,recipeUrl',
+            'elemnts': 'recipeId,foodImageUrl,recipeDescription,recipeTitle,recipeUrl,recipeMaterial',
             'categoryId': category_id
         })
         
@@ -22,6 +22,7 @@ class RecipeFetcher(IRecipeFetcher):
             recipe['url'] = recipe.pop('recipeUrl')
             recipe['description'] = recipe.pop('recipeDescription')
             recipe['image_url'] = recipe.pop('foodImageUrl')
+            recipe['recipe_materials'] = recipe.pop('recipeMaterial')
             recipe['category_id'] = category_id
             
         recipes = [Recipe(**recipe) for recipe in recipes]
