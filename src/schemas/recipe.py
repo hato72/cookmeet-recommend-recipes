@@ -30,9 +30,8 @@ class RecipeForRecommend(BaseModel):
         self.description = recipe.description
         
 # おすすめとして返すレシピの返り値
-class RecipeWithRank(BaseModel):
+class RecommendedRecipe(Recipe):
     rank: int
-    recipe: Recipe
     
 # レコメンド後のレシピの返り値
 class RecipeIdWithRank(BaseModel):
