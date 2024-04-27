@@ -17,6 +17,11 @@ class RecipeStep(BaseModel):
     index: int = Field(..., title='レシピ手順の番号')
     step: str = Field(..., title='レシピの手順')
     
+# レシピの材料
+class RecipeIngredient(BaseModel):
+    name: str = Field(..., title='材料名')
+    amount: str = Field(..., title='材料の量')
+    
 # レコメンドの際に使うレシピのスキーマ
 class RecipeForRecommend(BaseModel):
     id: int
