@@ -1,4 +1,4 @@
-from src.schemas.recipe import Recipe, IRecipeFetcher, RecipeForRecommend, RecipeIdWithRank, RecipeWithRank
+from src.schemas.recipe import Recipe, IRecipeFetcher, RecipeForRecommend, RecipeIdWithRank, RecommendedRecipe
 from typing import Final
 import time
 from src.schemas.category import CategoryId, CategoryIdWithRank
@@ -25,12 +25,12 @@ class RecipeService():
         return recipes
     
     @classmethod
-    def convert_recipe_ids_to_ranked_recipes(cls, recipe_ids_with_rank: list[RecipeIdWithRank], recipes: list[Recipe]) -> list[RecipeWithRank]:
-        ranked_recipes: list[RecipeWithRank] = []
+    def convert_recipe_ids_to_ranked_recipes(cls, recipe_ids_with_rank: list[RecipeIdWithRank], recipes: list[Recipe]) -> list[RecommendedRecipe]:
+        ranked_recipes: list[RecommendedRecipe] = []
         for recipe_id_with_rank in recipe_ids_with_rank:
             rank = recipe_id_with_rank.rank
             recipe = next(filter(lambda x: x.id == recipe_id_with_rank.recipe_id, recipes))
-            ranked_recipe = RecipeWithRank(rank=rank, recipe=recipe)
+            ranked_recipe = RecommendedRecipe(**recipe.model_dump(), rank=rank)
             ranked_recipes.append(ranked_recipe)
             
         return ranked_recipes
