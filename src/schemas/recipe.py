@@ -12,6 +12,11 @@ class Recipe(BaseModel):
     category_id: CategoryId | None = None
     recipe_materials: list[str]
     
+# レシピの手順
+class RecipeStep(BaseModel):
+    index: int = Field(..., title='レシピ手順の番号')
+    step: str = Field(..., title='レシピの手順')
+    
 # レコメンドの際に使うレシピのスキーマ
 class RecipeForRecommend(BaseModel):
     id: int
