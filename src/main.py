@@ -1,7 +1,23 @@
 from fastapi import FastAPI
 from src.routers import category, recipe, recommend
+import src.config as config
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+origins = [
+    config.FRONTEND_URL,
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
 
 @app.get('/')
 async def root():
