@@ -5,11 +5,16 @@ from pydantic import BaseModel
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.output_parsers import PydanticOutputParser
 from langchain.prompts import PromptTemplate
+import google.generativeai as genai
+import src.config as config
 
 class Recommend(IRecommend):
     def recommend_categories(self, psychorogical_test_results: list[str], categories: list[CategoryForRecommend], num_categories_to_recommend: int) -> list[CategoryIdWithRank]:
         
-        llm = ChatGoogleGenerativeAI(model='gemini-pro')
+        # GOOGLE_API_KEY = config.GEMINI_API_KEY
+        # genai.configure(api_key=GOOGLE_API_KEY)
+        # llm = genai.GenerativeModel("gemini-pro")
+        llm = ChatGoogleGenerativeAI(model='gemini-pro',google_api_key=config.GEMINI_API_KEY)
         
         prompt = PromptTemplate(
             template="""
