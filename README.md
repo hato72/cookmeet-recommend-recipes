@@ -14,7 +14,7 @@ Cloud Run (現在停止中)
 ## フロントエンド
 ソースコード: https://github.com/hato72/CookMeet
 
-デプロイ先：https://cook-meet.vercel.app/
+デプロイ先：https://cook-meet.vercel.app
 
 ## バックエンド(認証、作った料理の履歴)
 ソースコード: https://github.com/hato72/go_backend_hackathon
@@ -23,19 +23,17 @@ Cloud Run (現在停止中)
 
 ## 実行方法
 1. ルートディレクトリ直下に.envファイルを作成
-2. [Rakuten Developers](https://webservice.rakuten.co.jp/)の「+New App」からアクセスキーを取得
+2. [Rakuten Developers](https://webservice.rakuten.co.jp/)の「+New App」からapplication idを取得
 3. [Google AI Studio](https://aistudio.google.com/app/prompts/new_chat?hl=ja)からGeminiのAPIキーを取得
 4. `.env`ファイルに以下を記述
 ```
-RAKUTEN_APPLICATION_ID=<取得したアクセスキー>
-GOOGLE_API_KEY=<取得したAPIキー>
+RAKUTEN_APPLICATION_ID=
+GOOGLE_API_KEY=
 ```
-5. 【Vscodeの場合】拡張機能から「Dev Containers」をインストールし、コマンドパレットから`Open Folder in Container`を選択
-
-6. 【Vscode以外】以下を実行
+5. 以下を実行
 ```
-docker-compose build
-docker-compose up -d
+docker compose build
+docker compose up -d
 ```
 
 
