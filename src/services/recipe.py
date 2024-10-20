@@ -14,7 +14,7 @@ class RecipeService():
     def fetch_recipes_by_category_ids(self, category_ids: list[CategoryId]) -> list[Recipe]:
         recipes: list[Recipe] = []
         for category_id in category_ids:
-            # 一定時間スリープしてからリクエストを送る
+            print(f"Fetching recipes for category_id: {category_id}")  # デバッグ用ログ
             time.sleep(self.SLEEP_TIME)
             fetched_recipes = self._recipe_fetcher.fetch_recipe(category_id)
             for fetched_recipe in fetched_recipes:
