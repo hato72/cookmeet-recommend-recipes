@@ -8,6 +8,7 @@ app = FastAPI()
 origins = [
     config.FRONTEND_URL,
     'http://localhost:3000',
+    "https://cook-meet.vercel.app"
 ]
 
 app.add_middleware(
