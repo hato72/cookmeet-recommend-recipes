@@ -7,7 +7,8 @@ app = FastAPI()
 
 origins = [
     config.FRONTEND_URL,
-    'http://localhost:3000'
+    'http://localhost:3000',
+    'https://cookmeet-recommend-recipes.onrender.com'
 ]
 
 app.add_middleware(
