@@ -11,6 +11,10 @@ from src.fetchers.recipe import RecipeFetcher
 
 router = APIRouter()
 
+@router.get('/recipes/recommend')
+async def get_recommendation_message():
+    return {"message": "レシピのおすすめエンドポイントにアクセスしました。"}
+
 @router.post('/recipes/recommend')
 async def recommend_recipes(recommend_request_body: RecommendRequestBody):
     # 心理テストからおすすめのカテゴリを取得

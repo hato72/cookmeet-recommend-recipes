@@ -12,8 +12,11 @@ class RecipeFetcher(IRecipeFetcher):
             'categoryId': category_id
         })
         
+        if res.status_code != 200:
+            raise Exception(f"Error fetching recipes: {res.status_code} - {res.text}")
+        
         data = res.json()
-        recipes = data['result']
+        recipes = data.get('result', [])
         
         # recipeのキー名を変更
         for recipe in recipes:

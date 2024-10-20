@@ -11,7 +11,13 @@ class RecommendService(BaseModel):
         self._recommend = recommend
         
     def recommend_categories(self, psychorogical_test_results: list[str], categories: list[CategoryForRecommend], num_categories_to_recommend: int = 3) -> list[CategoryIdWithRank]:
-        return self._recommend.recommend_categories(psychorogical_test_results, categories, num_categories_to_recommend)
+        try:
+            return self._recommend.recommend_categories(psychorogical_test_results, categories, num_categories_to_recommend)
+        except Exception as e:
+            raise Exception(f"Error recommending categories: {str(e)}")
     
     def recommend_recipes(self, conditions: list[str], recipes: list[RecipeForRecommend], categories_rank: list[CategoryIdWithRank]) -> list[RecipeIdWithRank]:
-        return self._recommend.recommend_recipes(conditions, recipes, categories_rank)
+        try:
+            return self._recommend.recommend_recipes(conditions, recipes, categories_rank)
+        except Exception as e:
+            raise Exception(f"Error recommending recipes: {str(e)}")
