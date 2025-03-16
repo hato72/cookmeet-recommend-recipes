@@ -13,8 +13,8 @@ class Recommend(IRecommend):
         
         # GOOGLE_API_KEY = config.GEMINI_API_KEY
         # genai.configure(api_key=GOOGLE_API_KEY)
-        # llm = genai.GenerativeModel("gemini-pro")
-        llm = ChatGoogleGenerativeAI(model='gemini-pro',google_api_key=config.GEMINI_API_KEY)
+        # llm = genai.GenerativeModel("gemini-1.5-flash")
+        llm = ChatGoogleGenerativeAI(model='gemini-1.5-flash',google_api_key=config.GEMINI_API_KEY)
         
         prompt = PromptTemplate(
             template="""
@@ -43,7 +43,7 @@ class Recommend(IRecommend):
         return parsed_result.items
     
     def recommend_recipes(self, conditions: list[str], recipes: list[RecipeForRecommend], categories_rank: list[CategoryIdWithRank] , num_recipes_to_recommend: int = 3) -> list[RecipeIdWithRank]:
-        llm = ChatGoogleGenerativeAI(model='gemini-pro')
+        llm = ChatGoogleGenerativeAI(model='gemini-1.5-flash',google_api_key=config.GEMINI_API_KEY)
         
         class RecipeIdWithRankList(BaseModel):
             items: list[RecipeIdWithRank]
